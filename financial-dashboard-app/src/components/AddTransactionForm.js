@@ -2,6 +2,9 @@ import styled from "styled-components";
 import { ACTION_TYPES, useAppContext } from "../context/AppContext";
 import { useForm } from "../hooks/useForm";
 
+/**
+ * Custom styled components
+ */
 const Form = styled.form`
   display: flex;
   flex-direction: column;
@@ -29,9 +32,15 @@ const Button = styled.button`
 `;
 
 function AddTransactionForm() {
+
+  /**
+   * Using Reducer + Context API
+   */
   const { dispatch } = useAppContext();
 
   /**
+   * Use of Custom Hooks
+   * 
    * Here we extract the custom form submission logic in this component,
    * but we abstract other form updates and values resetting logic into the useFrom Hook
    * and call it through methods exposed

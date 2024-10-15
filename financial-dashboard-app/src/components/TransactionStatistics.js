@@ -7,6 +7,10 @@ export default function TransactionStatistics() {
     const {state} = useAppContext();
     const [stats, setStats] = useState({total: 0, average: 0});
 
+    /**
+     * Using web workers to pass on heavy computation to worker threads
+     * This makes user experience smooth and fluid
+     */
     useEffect(() => {
         const worker = new Worker(workerScript);
         worker.postMessage(state.transactions);

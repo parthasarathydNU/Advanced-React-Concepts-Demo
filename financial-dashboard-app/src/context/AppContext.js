@@ -11,8 +11,10 @@ const generateRandomTransaction = (id) => ({
 
 // Initializer function for useReducer
 const initializeState = () => {
-  const transactions = Array.from({ length: 50000 }, (_, i) => generateRandomTransaction(i + 1));
-  const balance = transactions.reduce((sum, transaction) => sum + transaction.amount, 1000);
+  const transactions = Array.from(
+    { length: 50000 }, (_, i) => generateRandomTransaction(i + 1));
+  const balance = transactions.reduce(
+    (sum, transaction) => sum + transaction.amount, 1000);
   return { balance, transactions };
 };
 
@@ -39,7 +41,8 @@ function transactionsReducer(state, action) {
 const AppContext = createContext();
 
 export function AppProvider({ children }) {
-  const [state, dispatch] = useReducer(transactionsReducer, null, initializeState);
+  const [state, dispatch] = useReducer(
+    transactionsReducer, null, initializeState);
   return (
     <AppContext.Provider value={{ state, dispatch }}>
       {children}
@@ -47,7 +50,8 @@ export function AppProvider({ children }) {
   );
 }
 
-// Here we define the custom hook as well so that there is no issues regarding typing errors while 
+// Here we define the custom hook as well so that there is no 
+// issues regarding typing errors while 
 // trying to access the AppContext within any component
 export function useAppContext() {
   return useContext(AppContext);

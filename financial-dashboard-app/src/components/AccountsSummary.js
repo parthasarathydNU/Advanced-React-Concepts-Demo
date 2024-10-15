@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { useAppContext } from "../context/AppContext";
 import SummaryContainer from "../ui/SummaryContainer";
 
+// Using styled components
 const Balance = styled.h2`
   color: #2c3e50;
   margin: 0;
@@ -11,6 +12,10 @@ const Balance = styled.h2`
 function AccountSummary() {
   const { state } = useAppContext();
 
+  /**
+   * This is a complex calculation, so memoize it to avoid recomputation
+   * during re render
+   */ 
   const totalIncome = useMemo(() => {
     console.log('Calculating total income...');
     return state.transactions
@@ -18,6 +23,9 @@ function AccountSummary() {
       .reduce((sum, t) => sum + t.amount, 0);
   }, [state.transactions]);  
 
+  /**
+   * Using a styled component Summary Container
+   */
   return (
     <SummaryContainer>
       <Balance>Balance: ${state.balance.toFixed(2)}</Balance>
