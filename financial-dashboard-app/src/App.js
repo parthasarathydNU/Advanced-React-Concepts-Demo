@@ -5,6 +5,7 @@ import ErrorBoundary from "./components/ErrorBoundary";
 import AccountSummary from "./components/AccountsSummary";
 
 import AddTransactionForm from "./components/AddTransactionForm";
+import TransactionStatistics from "./components/TransactionStatistics";
 
 /**
  * Lazy loading the Transaction list component
@@ -27,6 +28,7 @@ function App() {
         <AppContainer>
           <h1>Financial Dashboard</h1>
           <AccountSummary />
+          <TransactionStatistics />
           <AddTransactionForm />
           
           <Suspense fallback={<div>Loading transactions ...</div>}>
