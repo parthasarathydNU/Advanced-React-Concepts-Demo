@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import styled from "styled-components";
 import { useAppContext } from "../context/AppContext";
 
@@ -16,9 +17,17 @@ const Balance = styled.h2`
 function AccountSummary() {
   const { state } = useAppContext();
 
+  const totalIncome = useMemo(() => {
+    console.log('Calculating total income...');
+    return state.transactions
+      .filter(t => t.amount > 0)
+      .reduce((sum, t) => sum + t.amount, 0);
+  }, [state.transactions]);  
+
   return (
     <SummaryContainer>
       <Balance>Balance: ${state.balance.toFixed(2)}</Balance>
+      <p>Total Income: ${totalIncome.toFixed(2)}</p>
     </SummaryContainer>
   );
 }
