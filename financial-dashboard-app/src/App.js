@@ -1,10 +1,18 @@
-import logo from "./logo.svg";
+import { Suspense, lazy } from "react";
 import styled from "styled-components";
 import { AppProvider } from "./context/AppContext";
 import ErrorBoundary from "./components/ErrorBoundary";
 import AccountSummary from "./components/AccountsSummary";
-import TransactionList from "./components/TransactionList";
+
 import AddTransactionForm from "./components/AddTransactionForm";
+
+/**
+ * Lazy loading the Transaction list component
+ * Can add performance imporvements in case of larger applications
+ * 
+ */
+const TransactionList = lazy(() => import('./components/TransactionList'));
+
 
 const AppContainer = styled.div`
   max-width: 800px;
@@ -20,7 +28,11 @@ function App() {
           <h1>Financial Dashboard</h1>
           <AccountSummary />
           <AddTransactionForm />
-          <TransactionList />
+          
+          <Suspense fallback={<div>Loading transactions ...</div>}>
+            <TransactionList />
+          </Suspense>
+
         </AppContainer>
       </AppProvider>
     </ErrorBoundary>
