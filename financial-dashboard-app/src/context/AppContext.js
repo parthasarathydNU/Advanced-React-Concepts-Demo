@@ -1,11 +1,6 @@
 import React, { createContext, useContext, useReducer } from "react";
 
 // Reducer
-const initialState = {
-  balance: 1000,
-  transactions: [],
-};
-
 // Function to generate a random transaction
 const generateRandomTransaction = (id) => ({
   id,
