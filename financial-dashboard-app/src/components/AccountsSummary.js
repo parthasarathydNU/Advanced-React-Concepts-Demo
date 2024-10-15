@@ -1,13 +1,7 @@
 import { useMemo } from "react";
 import styled from "styled-components";
 import { useAppContext } from "../context/AppContext";
-
-const SummaryContainer = styled.div`
-  background-color: #f0f0f0;
-  padding: 20px;
-  border-radius: 8px;
-  margin-bottom: 20px;
-`;
+import SummaryContainer from "../ui/SummaryContainer";
 
 const Balance = styled.h2`
   color: #2c3e50;
