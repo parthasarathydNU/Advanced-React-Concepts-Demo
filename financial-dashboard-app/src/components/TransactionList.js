@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { FixedSizeList as List } from "react-window";
 import styled from "styled-components";
 import { useAppContext } from "../context/AppContext";
@@ -21,7 +21,7 @@ const ListItem = styled.div`
 function TransactionList() {
   const { state } = useAppContext();
 
-  const Row = ({ index, style }) => {
+  const Row = useCallback(({ index, style }) => {
     const transaction = state.transactions[index];
     return (
       <ListItem style={style}>
@@ -29,7 +29,7 @@ function TransactionList() {
         <span>${transaction.amount.toFixed(2)}</span>
       </ListItem>
     );
-  };
+  }, [state.transactions]);
 
   return (
     <ListContainer>
