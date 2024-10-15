@@ -1,6 +1,6 @@
-import {useState} from 'react';
 import styled from "styled-components";
-import { useAppContext } from '../context/AppContext';
+import { ACTION_TYPES, useAppContext } from "../context/AppContext";
+import { useForm } from "../hooks/useForm";
 
 const Form = styled.form`
   display: flex;
@@ -29,42 +29,47 @@ const Button = styled.button`
 `;
 
 function AddTransactionForm() {
-  const [description, setDescription] = useState("");
-  const [amount, setAmount] = useState("");
-
   const { dispatch } = useAppContext();
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    // Input validation
-    if (!description || !amount) return;
-
-    const transaction = {
-      id: Date.now(),
-      description,
-      amount: parseFloat(amount),
-    };
-
-    // Centralizing state updates using useReducer and Context
-    dispatch({ type: "ADD_TRANSACTION", payload: transaction });
-    setDescription("");
-    setAmount("");
+  /**
+   * Here we extract the custom form submission logic in this component,
+   * but we abstract other form updates and values resetting logic into the useFrom Hook
+   * and call it through methods exposed
+   * 
+   * This component only worries about how to handle values on submit
+   * Then what are the initial values to be passed to create the form
+   */
+  const formOnSubmit = (formValues) => {
+    dispatch({
+      type: ACTION_TYPES.ADD_TRANSACTION,
+      payload: {
+        id: Date.now(),
+        description: formValues.description,
+        amount: parseFloat(formValues.amount),
+      },
+    });
   };
+
+  const { values, handleChange, handleSubmit } = useForm(
+    { description: "", amount: "" },
+    formOnSubmit
+  );
 
   return (
     <Form onSubmit={handleSubmit}>
       <Input
+        name="description"
         type="text"
         placeholder="Description"
-        value={description}
-        onChange={(e) => setDescription(e.target.value)}
+        value={values.description}
+        onChange={handleChange}
       />
       <Input
+        name="amount"
         type="number"
         placeholder="Amount"
-        value={amount}
-        onChange={(e) => setAmount(e.target.value)}
+        value={values.amount}
+        onChange={handleChange}
       />
       <Button type="submit">Add Transaction</Button>
     </Form>
