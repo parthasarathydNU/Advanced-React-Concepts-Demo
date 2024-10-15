@@ -38,7 +38,7 @@ function transactionsReducer(state, action) {
 
 // Context
 
-const AppContext = createContext();
+export const AppContext = createContext();
 
 export function AppProvider({ children }) {
   const [state, dispatch] = useReducer(
